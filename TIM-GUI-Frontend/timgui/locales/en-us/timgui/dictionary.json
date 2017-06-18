@@ -1,0 +1,29 @@
+{
+    "dialog": {
+        "changeRoutingMethod": {
+            "header": "Confirm New Routing Method",
+            "content": "Are you sure you want to change the routing method? All added routing will be lost.",
+            "button": {
+                "confirm": "Confirm",
+                "cancel": "Cancel"
+            }
+        }
+    },
+    "buttons": {
+        "add": {
+            "caption": "Add"
+        },
+        "save": {
+            "caption": "Save"
+        },
+        "cancel": {
+            "caption": "Cancel"
+        }
+    },
+    "TableAAAHead": {
+        "name": "name",
+        "age": "age",
+        "job": "job"
+    }
+}
+

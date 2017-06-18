@@ -1,0 +1,25 @@
+{
+    "tableName": "CCC",
+    "tableHander": [
+        "name",
+        "score",
+        "rank"
+    ],
+    "tableContents": [
+        {
+            "name": "eqinson1",
+            "score": "100",
+            "rank": "A"
+        },
+        {
+            "name": "eqinson2",
+            "score": "80",
+            "rank": "B"
+        },
+        {
+            "name": "eqinson3",
+            "score": "70",
+            "rank": "C"
+        }
+    ]
+}

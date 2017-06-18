@@ -1,0 +1,41 @@
+{
+    "tableName": "BBB",
+    "tableHander": [
+        "name",
+        "age",
+        "job",
+        "hometown"
+    ],
+    "tableContents": [
+        {
+            "name": "eqinson1",
+            "age": "10",
+            "job": "software engineer",
+            "hometown": "Shanghai"
+        },
+        {
+            "name": "eqinson2",
+            "age": "11",
+            "job": "support engineer",
+            "hometown": "Shanghai"
+        },
+        {
+            "name": "eqinson1",
+            "age": "12",
+            "job": "test engineer",
+            "hometown": "Beijing"
+        },
+        {
+            "name": "eqinson1",
+            "age": "10",
+            "job": "software engineer",
+            "hometown": "Beijing"
+        },
+        {
+            "name": "eqinson2",
+            "age": "11",
+            "job": "support engineer",
+            "hometown": "Beijing"
+        }
+    ]
+}

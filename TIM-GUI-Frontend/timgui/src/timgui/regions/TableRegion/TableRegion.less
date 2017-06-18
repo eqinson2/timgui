@@ -1,0 +1,43 @@
+.eaTimgui-tableRegion {
+    .eaTimgui-tableRegion-editContent {
+        width: 100%;
+        height: 700vh;
+        margin-top: 100px;
+        &-main {
+            height: 100%;
+        }
+    }
+}
+
+@widgetClass: eaTimgui-tableRegion-editContent;
+.eaTimgui-tableRegion-editContent {
+
+    &-table_loading {
+        min-height: 250px;
+        opacity: .4;
+
+        & + .@{widgetClass}-loader {
+            display: block;
+        }
+    }
+
+    &-loader {
+        display: none;
+    }
+}
+
+.eaTimgui-tableRegion-editContent-main-topMenu-select {
+    float: right;
+}
+
+.eaTimgui-tableRegion-editContent-main-topMenu-select-show {
+    font-size: 13px;
+}
+
+.eaTimgui-tableRegion-editContent-main-topMenu-select-box {
+    float: right;
+    width: 56px;
+}
+
+
+

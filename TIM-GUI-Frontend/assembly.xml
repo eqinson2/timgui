@@ -1,0 +1,19 @@
+<assembly>
+    <id>TimGuiFrontend</id>
+	<formats>
+		<format>zip</format>
+		<format>tar.gz</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+    <files>
+		<file>
+			<source>${project.basedir}/target/${artifactId}-${pom.version}.war</source>
+			<outputDirectory>/</outputDirectory>
+			<destName>timgui-frontend.war</destName>
+		</file>
+		<file>
+			<source>${project.build.directory}/MANIFEST</source>
+			<destName>MANIFEST-${project.artifactId}</destName>
+		</file>
+	</files>
+</assembly>

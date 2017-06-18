@@ -1,0 +1,239 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.ericsson.ema.tim</groupId>
+    <artifactId>TimGuiFrontend</artifactId>
+    <version>1.0</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <nodejs.path>${project.build.directory}/nodejs/</nodejs.path>
+        <cdt.path>${project.build.directory}/cdt/</cdt.path>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <nodejs.classifier>OS_NOT_SUPPORTED_BY_NODEJS</nodejs.classifier>
+    </properties>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.9</version>
+                <executions>
+                    <execution>
+                        <id>extract-dependencies</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.ericsson</groupId>
+                                    <artifactId>nodejs-maven-binaries</artifactId>
+                                    <version>0.10.26</version>
+                                    <classifier>${nodejs.classifier}</classifier>
+                                    <type>zip</type>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${nodejs.path}</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <excludeTransitive>true</excludeTransitive>
+                        </configuration>
+                    </execution>
+                    <!-- fix maven dependency for cdt2 -->
+                    <execution>
+                        <id>extract-cdt2-from-nexus-server</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.ericsson</groupId>
+                                    <artifactId>cdt-maven-binaries</artifactId>
+                                    <version>2.0.35.1</version>
+                                    <type>zip</type>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${cdt.path}</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>run_build</id>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <target>
+                                <echo message="Executing Node Goals" />
+                                <exec executable="cmd" osfamily="windows" failonerror="true">
+                                    <env key="PATH" path="${env.PATH}:${nodejs.path}" />
+                                    <arg value="/c" />
+                                    <arg value="node.exe target/cdt/node_modules/cdt-build/index.js --packages timgui --deploy target/${project.artifactId}-${project.version} --deploy-with config.js,WEB-INF" />
+                                </exec>
+                                <exec executable="bash" osfamily="unix" failonerror="true">
+                                    <env key="PATH" path="${env.PATH}:${nodejs.path}" />
+                                    <arg value="-c" />
+                                    <arg value="node target/cdt/node_modules/cdt-build/index.js --packages timgui --deploy target/${project.artifactId}-${project.version} --deploy-with config.js,WEB-INF" />
+                                </exec>
+                                <echo message="Executing Node Goals -- DONE" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>com.ericsson.mvn</groupId>
+                <artifactId>tar-manifest-generator</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <id>CXC1739809</id>
+                    <version>${project.version}</version>
+                    <name>${project.artifactId}</name>
+                </configuration>
+            </plugin>
+
+
+            <!-- Builds the OM-Frontend-*.tar.gz and .zip file -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>assembly.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>win-x86</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                    <arch>x86</arch>
+                </os>
+            </activation>
+            <properties>
+                <nodejs.classifier>win-x86</nodejs.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>win-x64</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <nodejs.classifier>win-x64</nodejs.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>linux-x86</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                    <arch>x86</arch>
+                </os>
+            </activation>
+            <properties>
+                <nodejs.classifier>linux-x86</nodejs.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>linux-x86-386</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                    <arch>i386</arch>
+                </os>
+            </activation>
+            <properties>
+                <nodejs.classifier>linux-x86</nodejs.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>linux-x86-686</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                    <arch>i686</arch>
+                </os>
+            </activation>
+            <properties>
+                <nodejs.classifier>linux-x86</nodejs.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>linux-x64-x86_64</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                    <arch>x86_64</arch>
+                </os>
+            </activation>
+            <properties>
+                <nodejs.classifier>linux-x64</nodejs.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>linux-x64-amd64</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <nodejs.classifier>linux-x64</nodejs.classifier>
+            </properties>
+        </profile>
+
+    </profiles>
+</project>

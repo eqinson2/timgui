@@ -1,0 +1,39 @@
+{
+    "parent": "$(parentJson)/app.json",
+    "defaultPhase": "package",
+    "properties": {
+        "package": "timgui",
+        "name": "Timgui",
+        "version": "1.0.0",
+        "skeleton": "2.3.1",
+        "skeletonType": "app"
+    },
+    "phases": {
+        "package": {
+            "depends": [
+                "clean",
+                "analyze",
+                "test",
+                "compile",
+                "compress"
+            ]
+        }
+    },
+    "dependencies": {
+        "jquery": "2.0.2",
+        "tablelib": "0.8.22",
+        "flyout": "0.1.5",
+        "formvalidator": "0.2.0",
+        "systemtime": "0.0.7",
+        "jscore": "1.7.14",
+        "i18n": "2.4.1",
+        "container": "1.14.7",
+        "widgets": "1.8.5",
+        "assets": "1.8.1",
+        "layouts": "1.6.20",
+        "uit": "0.3.5",
+        "chartlib": "1.4.1",
+        "commonComponents": "1.5.16",
+        "activation-system-components": "0.0.16"
+    }
+}
