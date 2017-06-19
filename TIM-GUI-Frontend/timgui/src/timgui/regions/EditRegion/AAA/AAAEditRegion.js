@@ -65,17 +65,21 @@ define([
 
         },
 
-        saveTab: function () {
+        getSaveData: function () {
             var name = this.view.getNameInput().getValue();
             var age = this.view.getAgeInput().getValue();
             var job = this.view.getJobInput().getValue();
+            return {"name": name, "age": age, "job": job};
+        },
+
+        saveTab: function (data) {
             GenericModel.save({
                 url: "/timgui-backend/tables/" + this.tabName,
                 type: "PUT",
                 authentication: this.authHandler.authenticationDetails(),
                 contentType: "application/json;charset=UTF-8",
                 data: JSON.stringify({
-                    "tabData": {"name": name, "age": age, "job": job}
+                    "tabData": data
                 }),
                 success: function (resp) {
                     this.successNotify("Table " + this.tabName + " saved");

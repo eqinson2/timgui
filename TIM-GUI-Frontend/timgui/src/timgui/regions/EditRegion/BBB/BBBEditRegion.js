@@ -21,6 +21,7 @@ define([
         init: function (options) {
             this.authHandler = new AuthHandler();
             this.options = options || {};
+            this.tabName = "BBB";
         },
 
         onDOMAttach: function () {
@@ -49,7 +50,7 @@ define([
                 if (!this.validateInput()) {
                     return;
                 }
-                this.saveTab();
+                this.saveTab(this.getSaveData());
                 container.getEventBus().publish("flyout:hide");
             }.bind(this));
 
@@ -65,7 +66,35 @@ define([
 
         },
 
-        saveTab: function () {
+        getSaveData: function () {
+            var name = this.view.getNameInput().getValue();
+            var age = this.view.getAgeInput().getValue();
+            var job = this.view.getJobInput().getValue();
+            var hometown = this.view.getHometownInput().getValue();
+            return {"name": name, "age": age, "job": job, "hometown": hometown};
+        },
+
+        saveTab: function (data) {
+            GenericModel.save({
+                url: "/timgui-backend/tables/" + this.tabName,
+                type: "PUT",
+                authentication: this.authHandler.authenticationDetails(),
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify({
+                    "tabData": data
+                }),
+                success: function (resp) {
+                    this.successNotify("Table " + this.tabName + " saved");
+                    container.getEventBus().publish("tableRegion:reload", this.tabName);
+                    container.getEventBus().publish("flyout:hide");
+                }.bind(this),
+                error: function (msg, xhr) {
+                    console.error('Error: ' + xhr.getResponseText());
+                    var details = (JSON.parse(xhr.getResponseText())).details;
+                    var endIndex = details.indexOf(":");
+                    this.failedNotify("Failed to update table: " + details.substring(0, endIndex));
+                }.bind(this)
+            });
         },
 
         successNotify: function (msg) {

@@ -1,7 +1,7 @@
 define([
     "jscore/core",
     "template!./searchPanel.html",
-    "text!./searchPanel.css",
+    "text!./searchPanel.less",
     "i18n!Timgui/dictionary.json"
 ], function (core, template, style, dictionary) {
 

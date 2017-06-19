@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ericsson.ema.tim</groupId>
     <artifactId>TimGuiFrontend</artifactId>
@@ -83,18 +84,20 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <target>
-                                <echo message="Executing Node Goals" />
-                                <exec executable="cmd" osfamily="windows" failonerror="true">
-                                    <env key="PATH" path="${env.PATH}:${nodejs.path}" />
-                                    <arg value="/c" />
-                                    <arg value="node.exe target/cdt/node_modules/cdt-build/index.js --packages timgui --deploy target/${project.artifactId}-${project.version} --deploy-with config.js,WEB-INF" />
+                                <echo message="Executing Node Goals"/>
+                                <exec executable="cmd" osfamily="windows" failonerror="false">
+                                    <env key="PATH" path="${env.PATH}:${nodejs.path}"/>
+                                    <arg value="/c"/>
+                                    <arg
+                                        value="node.exe target/cdt/node_modules/cdt-build/index.js --packages timgui --deploy target/${project.artifactId}-${project.version} --deploy-with config.js,WEB-INF"/>
                                 </exec>
-                                <exec executable="bash" osfamily="unix" failonerror="true">
-                                    <env key="PATH" path="${env.PATH}:${nodejs.path}" />
-                                    <arg value="-c" />
-                                    <arg value="node target/cdt/node_modules/cdt-build/index.js --packages timgui --deploy target/${project.artifactId}-${project.version} --deploy-with config.js,WEB-INF" />
+                                <exec executable="bash" osfamily="unix" failonerror="false">
+                                    <env key="PATH" path="${env.PATH}:${nodejs.path}"/>
+                                    <arg value="-c"/>
+                                    <arg
+                                        value="node target/cdt/node_modules/cdt-build/index.js --packages timgui --deploy target/${project.artifactId}-${project.version} --deploy-with config.js,WEB-INF"/>
                                 </exec>
-                                <echo message="Executing Node Goals -- DONE" />
+                                <echo message="Executing Node Goals -- DONE"/>
                             </target>
                         </configuration>
                         <goals>
