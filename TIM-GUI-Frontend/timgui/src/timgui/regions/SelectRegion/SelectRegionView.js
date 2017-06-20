@@ -23,6 +23,10 @@ define([
             this.getElement().find(".eaTimgui-SelectRegion-Select").addEventHandler("click", fn);
         },
 
+        addSelectChangeHandler: function (fn) {
+            this.getSelectTableBox().addEventHandler("change", fn);
+        },
+
         addSelectCloseHandler: function (fn) {
             this.getElement().find(".eaTimgui-Close_Icon").addEventHandler("click", fn);
         },

@@ -138,14 +138,7 @@ define([
             this.view.getJobInput().setValue(value);
             this.view.getJobInput().setAttribute("title", value);
         },
-
-        clearCache: function () {
-        },
-
-        clearInput: function () {
-        }
-    })
-        ;
+    });
 
     function isNumOnly(inputString) {
         return new RegExp("^[0-9]+$").test(inputString);

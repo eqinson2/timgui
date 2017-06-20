@@ -3,14 +3,14 @@ define([
     "./SelectRegionView",
     "widgets/MultiSelectBox",
     "i18n!timgui/dictionary.json",
-    "widgets/Combobox",
+    'widgets/SelectBox',
     "jscore/ext/net",
     "container/api",
     "../../widgets/authHandler/AuthHandler",
     "../../widgets/searchPanel/searchPanel",
     "widgets/Accordion",
     "commonComponents/model/GenericModel"
-], function (core, View, MultiSelectBox, dictionary, Combobox, net, container, AuthHandler, SearchPanel, Accordion, GenericModel) {
+], function (core, View, MultiSelectBox, dictionary, SelectBox, net, container, AuthHandler, SearchPanel, Accordion, GenericModel) {
     "use strict";
 
     return core.Region.extend({
@@ -46,21 +46,35 @@ define([
                         tableList.push(tableMap);
                     }
 
-                    this.tableInput = new Combobox({
-                        placeholder: 'Please select tables',
-                        autoComplete: {
-                            caseInsensitive: true
-                        },
+                    var value = "";
+                    if (tableList.length > 0)
+                        value = tableList[0];
+
+                    this.tableSelBox = new SelectBox({
+                        value: value,
                         items: tableList,
                         modifiers: [
-                            {name: 'width', value: '%100'}
+                            {name: 'width', value: '100%'}
                         ]
                     });
-                    // if (this.tableList.length > 0) {
-                    //     this.getContext().eventBus.publish("tableRegion:select", this.tableList[0]);
-                    // }
-                    this.tableInput.attachTo(this.view.getSelectTableBox());
+
+                    if (this.tableList.length > 0) {
+                        this.getContext().eventBus.publish("tableRegion:select", this.tableList[0]);
+                    }
+
+                    this.tableSelBox.attachTo(this.view.getSelectTableBox());
                     this.loadAccordionWidget(this.tableList);
+
+                    if (this.tableSelBox.getValue() !== undefined) {
+                        this.tabName = this.tableSelBox.getValue().name;
+                        this.searchPanel.showDetail(this.tabName);
+                    }
+
+                    this.tableSelBox.addEventHandler("change", function () {
+                        this.tabName = this.tableSelBox.getValue().name;
+                        this.searchPanel.showDetail(this.tabName);
+                    }.bind(this));
+
                 }.bind(this),
 
                 error: function (msg, xhr) {
@@ -92,11 +106,18 @@ define([
         },
 
         select: function () {
-            var table = this.tableInput.getValue().name;
+            var table = this.tableSelBox.getValue().name;
             if (table !== "" && table !== undefined)
                 this.getContext().eventBus.publish("tableRegion:select", table);
-        }
+        },
 
+        change: function () {
+            console.log("!!!!!!!!!!!!!!!!!!!!!");
+            var table = this.tableSelBox.getValue().name;
+            if (table !== "" && table !== undefined)
+                this.searchPanel.showDetail(table);
+        }
     });
 
 });
+

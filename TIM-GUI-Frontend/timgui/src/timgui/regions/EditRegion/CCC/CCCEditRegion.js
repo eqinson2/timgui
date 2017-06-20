@@ -138,18 +138,5 @@ define([
             this.view.getRankInput().setValue(value);
             this.view.getRankInput().setAttribute("title", value);
         },
-
-        clearCache: function () {
-        },
-
-        clearInput: function () {
-        },
-
-
-        changeMethodLayout: function (newRoutingMethod) {
-        }
-
     });
-
-
 });

@@ -145,17 +145,6 @@ define([
             this.view.getHometownInput().setValue(value);
             this.view.getHometownInput().setAttribute("title", value);
         },
-
-        clearCache: function () {
-        },
-
-        clearInput: function () {
-        },
-
-
-        changeMethodLayout: function (newRoutingMethod) {
-        }
-
     });
 
 

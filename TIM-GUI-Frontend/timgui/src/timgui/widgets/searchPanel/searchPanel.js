@@ -42,20 +42,6 @@ define([
             if (tabList.length > 0)
                 value = tabList[0];
 
-            this.tableSelBox = new SelectBox({
-                value: value,
-                items: tabList,
-                modifiers: [
-                    {name: 'width', value: '100%'}
-                ]
-            });
-
-            this.tableSelBox.addEventHandler("change", function () {
-                this.tabName = this.tableSelBox.getValue().name;
-                this.showDetail(this.tabName);
-            }.bind(this));
-
-
             this.view.addSearchClickHandler(function () {
                 if (!this.validateInput() || !this.view.isSearchEnabled()) {
                     return;
@@ -66,12 +52,6 @@ define([
             this.view.addClearClickHandler(function () {
                 this.cancel();
             }.bind(this));
-
-            if (this.tableSelBox.getValue() !== undefined) {
-                this.tabName = this.tableSelBox.getValue().name;
-                this.showDetail(this.tableSelBox.getValue().name);
-            }
-            this.tableSelBox.attachTo(this.view.getTab());
         },
 
         getTabName: function () {
@@ -132,7 +112,7 @@ define([
         },
 
         search: function () {
-            var tabName = this.getTabName();
+            var tabName = this.parent.tabName;
             var data = this.getInput(tabName);
             this.filterTab(tabName, data);
         },
