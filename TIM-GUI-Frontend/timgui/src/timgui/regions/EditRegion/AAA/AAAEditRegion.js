@@ -49,7 +49,7 @@ define([
                 if (!this.validateInput()) {
                     return;
                 }
-                this.saveTab();
+                this.saveTab(this.getOldData(), this.getNewData());
                 container.getEventBus().publish("flyout:hide");
             }.bind(this));
 
@@ -65,21 +65,26 @@ define([
 
         },
 
-        getSaveData: function () {
+        getOldData: function () {
+            return {"name": this.options.name, "age": this.options.age, "job": this.options.job};
+        },
+
+        getNewData: function () {
             var name = this.view.getNameInput().getValue();
             var age = this.view.getAgeInput().getValue();
             var job = this.view.getJobInput().getValue();
             return {"name": name, "age": age, "job": job};
         },
 
-        saveTab: function (data) {
+        saveTab: function (oldData, newData) {
             GenericModel.save({
-                url: "/timgui-backend/tables/" + this.tabName,
+                url: "/timgui-backend/tables/set/" + this.tabName,
                 type: "PUT",
                 authentication: this.authHandler.authenticationDetails(),
                 contentType: "application/json;charset=UTF-8",
                 data: JSON.stringify({
-                    "tabData": data
+                    "oldData": oldData,
+                    "newData": newData
                 }),
                 success: function (resp) {
                     this.successNotify("Table " + this.tabName + " saved");
@@ -137,7 +142,7 @@ define([
             this.job = value;
             this.view.getJobInput().setValue(value);
             this.view.getJobInput().setAttribute("title", value);
-        },
+        }
     });
 
     function isNumOnly(inputString) {

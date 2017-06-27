@@ -36,7 +36,7 @@ define([
                 this.tableInput.detach();
             }
             GenericModel.fetch({
-                url: "/timgui-backend/tables/list",
+                url: "/timgui-backend/tables/get/listAll",
                 authentication: this.authHandler.authenticationDetails(),
                 success: function (resp) {
                     this.tableList = resp.tables;
@@ -112,7 +112,6 @@ define([
         },
 
         change: function () {
-            console.log("!!!!!!!!!!!!!!!!!!!!!");
             var table = this.tableSelBox.getValue().name;
             if (table !== "" && table !== undefined)
                 this.searchPanel.showDetail(table);

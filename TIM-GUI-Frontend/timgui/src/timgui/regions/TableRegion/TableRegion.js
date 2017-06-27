@@ -53,7 +53,7 @@ define([
         fetchTable: function (selectedTabName) {
             this.view.setLoadingDisplay(true);
             GenericModel.fetch({
-                url: "/timgui-backend/tables/" + selectedTabName,
+                url: "/timgui-backend/tables/get/" + selectedTabName,
                 authentication: this.authHandler.authenticationDetails(),
                 success: function (data) {
                     this.displayTable(data);
@@ -70,8 +70,9 @@ define([
             this.view.setLoadingDisplay(true);
             this.getContext().eventBus.publish("filter:jobStart");
             GenericModel.fetch({
-                url: '/timgui-backend/tables/filtering/' + param.name,
+                url: '/timgui-backend/tables/filter/' + param.name,
                 authentication: this.authHandler.authenticationDetails(),
+                type: "POST",
                 data: param.condition,
                 contentType: 'application/json',
                 success: function (resp) {
