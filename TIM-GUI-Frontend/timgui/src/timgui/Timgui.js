@@ -94,7 +94,8 @@ define([
 
         saveTabContent: function (tabName, tabData, addTabContWidget) {
             GenericModel.save({
-                url: '/timgui-backend/tables/' + tabName,
+                url: '/timgui-backend/tables/insert/' + tabName,
+                type: "POST",
                 authentication: this.authHandler.authenticationDetails(),
                 data: tabData,
                 contentType: 'application/json',
@@ -141,7 +142,7 @@ define([
 
         initTabList: function (addTabContWidget) {
             GenericModel.fetch({
-                url: "/timgui-backend/tables/list",
+                url: "/timgui-backend/tables/get/listAll",
                 authentication: this.authHandler.authenticationDetails(),
                 success: function (resp) {
                     addTabContWidget.initTab(resp.tables);

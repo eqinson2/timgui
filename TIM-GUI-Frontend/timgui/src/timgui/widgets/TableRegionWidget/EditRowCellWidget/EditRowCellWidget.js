@@ -74,9 +74,10 @@ define([
                     color: 'darkBlue',
                     action: function () {
                         GenericModel.destroy({
-                            url: "/timgui-backend/tables/" + this.tabName,
+                            url: "/timgui-backend/tables/delete/" + this.tabName,
                             authentication: this.authHandler.authenticationDetails(),
-                            headers: this.getRow().getData(),
+                            type: "DELETE",
+                            data: this.getRow().getData(),
                             contentType: 'application/json',
                             success: function (data) {
                                 this.popSuccessNotification("Delete Table Row Successfully.");

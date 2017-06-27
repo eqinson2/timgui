@@ -20,7 +20,6 @@ define([
         onViewReady: function () {
             this.hasExecuteValidate = false;
             this.allRoutingRuleWidgets = [];
-            // this.initAddButton();
         },
 
         onDestroy: function () {
