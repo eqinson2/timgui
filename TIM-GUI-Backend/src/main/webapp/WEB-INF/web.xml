@@ -1,0 +1,16 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+		 version="3.1">
+
+	<!-- NOTE
+    This web.xml is not needed when deploying servlets of 3.0+ specification.
+     -->
+	<listener>
+		<listener-class>org.scalatra.servlet.ScalatraListener</listener-class>
+	</listener>
+
+	<session-config>
+		<!-- 12 hours session -->
+		<session-timeout>720</session-timeout>
+	</session-config>
+</web-app>
