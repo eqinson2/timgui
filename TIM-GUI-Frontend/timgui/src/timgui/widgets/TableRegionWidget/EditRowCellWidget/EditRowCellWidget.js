@@ -77,7 +77,7 @@ define([
                             url: "/timgui-backend/tables/delete/" + this.tabName,
                             authentication: this.authHandler.authenticationDetails(),
                             type: "DELETE",
-                            data: this.getRow().getData(),
+                            headers: this.getRow().getData(),
                             contentType: 'application/json',
                             success: function (data) {
                                 this.popSuccessNotification("Delete Table Row Successfully.");

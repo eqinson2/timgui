@@ -13,6 +13,7 @@ package com.ericsson.ema.timgui
 
 import javax.servlet.ServletContext
 
+import com.ericsson.ema.tim.context.TableInfoMap
 import com.ericsson.ema.tim.zookeeper.{ZKConnectionManager, ZKMonitor}
 import org.scalatra._
 import org.slf4j.LoggerFactory
@@ -37,12 +38,12 @@ class ScalatraBootstrap extends LifeCycle {
 		zkm.init()
 		zkMonitor = new ZKMonitor(zkm)
 		zkMonitor.start()
-
-		context.mount(new CreateServlet, BASE_URI + "/insert")
-		context.mount(new DeleteServlet, BASE_URI + "/delete")
-		context.mount(new SetServlet, BASE_URI + "/set")
-		context.mount(new GetServlet, BASE_URI + "/get")
-		context.mount(new FilterServlet, BASE_URI + "/filter")
+		val tableInfo = TableInfoMap()
+		context.mount(new CreateServlet(tableInfo), BASE_URI + "/insert")
+		context.mount(new DeleteServlet(tableInfo), BASE_URI + "/delete")
+		context.mount(new SetServlet(tableInfo), BASE_URI + "/set")
+		context.mount(new GetServlet(tableInfo), BASE_URI + "/get")
+		context.mount(new FilterServlet(tableInfo), BASE_URI + "/filter")
 	}
 
 	override def destroy(context: ServletContext): Unit = {

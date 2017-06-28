@@ -21,6 +21,13 @@ object Dependencies {
 
 	val javax: ModuleID = "javax.servlet" % "javax.servlet-api" % "3.1.0"
 
+	val scalaTest: ModuleID = "org.scalatest" %% "scalatest" % "3.0.1"
+	val scalaMock: ModuleID = "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0"
+	val scalaCheck: ModuleID = "org.scalacheck" %% "scalacheck" % "1.13.4"
+	val junit: ModuleID = "junit" % "junit" % "4.12"
+	val scalatraSpecs2: ModuleID = "org.scalatra" %% "scalatra-specs2" % scalatraVersion
+	val scalatraScalatest: ModuleID = "org.scalatra" %% "scalatra-scalatest" % scalatraVersion
+
 	val commonDependencies: Seq[ModuleID] = Seq(
 		joseJWT % Provided,
 		slf4j_for_jcl % Provided,
@@ -31,13 +38,29 @@ object Dependencies {
 		playJSON,
 		httpClient % Provided,
 		javax % Provided,
-		zkcache
+		zkcache,
+		slf4j_nop % Test,
+		scalaTest % Test,
+		scalaCheck % Test,
+		junit % Test,
+		scalatraSpecs2 % Test,
+		scalatraScalatest % Test,
+		scalaMock % Test
 	).map(_
 		exclude("log4j", "log4j")
 		exclude("org.slf4j", "slf4j-log4j12")
 		exclude("org.slf4j", "slf4j-api")
 		excludeAll ExclusionRule("org.scala-lang")
 	) :+ slf4j % Provided
+
+	val testDependencies: Seq[ModuleID] = Seq(
+		scalaTest,
+		scalaCheck,
+		junit,
+		scalatraSpecs2,
+		scalatraScalatest,
+		scalaMock
+	)
 
 	val modelDependencies: Seq[ModuleID] = Seq()
 	val serviceDependencies: Seq[ModuleID] = Seq()

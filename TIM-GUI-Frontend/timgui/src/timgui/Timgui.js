@@ -97,7 +97,7 @@ define([
                 url: '/timgui-backend/tables/insert/' + tabName,
                 type: "POST",
                 authentication: this.authHandler.authenticationDetails(),
-                data: tabData,
+                headers: tabData,
                 contentType: 'application/json',
                 success: function (data, xhr) {
                     this.successNotify("Table record added");

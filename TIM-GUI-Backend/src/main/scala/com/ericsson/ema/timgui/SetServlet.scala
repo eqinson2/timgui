@@ -12,15 +12,15 @@ import scala.util.{Failure, Success, Try}
 /**
   * Created by eqinson on 2017/6/26.
   */
-class SetServlet extends ScalatraServlet with JsonErrorMessage {
+class SetServlet(private[this] val tableInfo: TableInfoMap, updater: Option[Update] = None) extends ScalatraServlet with JsonErrorMessage {
 	private val logger: Logger = LoggerFactory.getLogger(getClass)
 
 	private val defaultHeader = Map("Content-Type" -> "application/json;UTF-8")
 
 	put("/:tableName") {
 		params.get("tableName") match {
-			case Some(table) if validTables.isValid(table) =>
-				val fields = TableInfoMap().lookup(table).map(_.tableMetadata.keys.toList)
+			case Some(table) if validTables.isValid(tableInfo, table) =>
+				val fields = tableInfo.lookup(table).map(_.tableMetadata.keys.toList)
 
 				fields match {
 					case Some(f) =>
@@ -28,15 +28,15 @@ class SetServlet extends ScalatraServlet with JsonErrorMessage {
 						val oldData = (json \ "oldData").validate[Map[String, String]].get
 						val newData = (json \ "newData").validate[Map[String, String]].get
 
-						val updater = Update().into(table)
+						val upd = updater.getOrElse(Update()).into(table)
 
 						for ((newField, newValue) <- newData; if newValue != "")
-							updater.set(newField, newValue)
+							upd.set(newField, newValue)
 
 						for ((oldField, oldValue) <- oldData)
-							updater.where(Eq(oldField, oldValue))
+							upd.where(Eq(oldField, oldValue))
 
-						Try(updater.execute()) match {
+						Try(upd.execute()) match {
 							case Success(_)  => NoContent
 							case Failure(ex) => BadRequest(body = jsonResponse("500", "update into table failed"), reason = ex.getMessage)
 						}
@@ -44,7 +44,7 @@ class SetServlet extends ScalatraServlet with JsonErrorMessage {
 						InternalServerError(body = jsonResponse("500", s"unexpected table: $table in zkcache when set table"), headers = defaultHeader)
 				}
 
-			case Some(table) if !validTables.isValid(table) =>
+			case Some(table) if !validTables.isValid(tableInfo, table) =>
 				BadRequest(body = jsonResponse("400", s"illegal table name: $table in set request"), reason = "Bad Request")
 
 			case None =>

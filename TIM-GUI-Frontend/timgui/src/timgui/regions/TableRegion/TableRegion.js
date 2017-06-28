@@ -72,8 +72,8 @@ define([
             GenericModel.fetch({
                 url: '/timgui-backend/tables/filter/' + param.name,
                 authentication: this.authHandler.authenticationDetails(),
-                type: "POST",
-                data: param.condition,
+                type: "GET",
+                headers: param.condition,
                 contentType: 'application/json',
                 success: function (resp) {
                     this.displayTable(resp);
