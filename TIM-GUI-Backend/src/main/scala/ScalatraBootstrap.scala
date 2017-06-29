@@ -1,5 +1,3 @@
-package com.ericsson.ema.timgui
-
 /*
  * Created : 12/28/16
  *
@@ -15,6 +13,7 @@ import javax.servlet.ServletContext
 
 import com.ericsson.ema.tim.context.TableInfoMap
 import com.ericsson.ema.tim.zookeeper.{ZKConnectionManager, ZKMonitor}
+import com.ericsson.ema.timgui._
 import org.scalatra._
 import org.slf4j.LoggerFactory
 
@@ -25,7 +24,7 @@ import org.slf4j.LoggerFactory
   * 4、GET     /url/xxx  get
   */
 class ScalatraBootstrap extends LifeCycle {
-	private val logger = LoggerFactory.getLogger("com.ericsson.ema.timgui.ScalatraBootstrap")
+	private val logger = LoggerFactory.getLogger("ScalatraBootstrap")
 
 	private val BASE_URI = "/timgui-backend/tables"
 
@@ -33,21 +32,35 @@ class ScalatraBootstrap extends LifeCycle {
 
 	private var zkMonitor: ZKMonitor = _
 
+
 	override def init(context: ServletContext): Unit = {
+		context.setInitParameter(ScalatraBase.ForceHttpsKey, "true")
+
 		zkm = ZKConnectionManager()
 		zkm.init()
 		zkMonitor = new ZKMonitor(zkm)
 		zkMonitor.start()
+
 		val tableInfo = TableInfoMap()
-		context.mount(new CreateServlet(tableInfo), BASE_URI + "/insert")
-		context.mount(new DeleteServlet(tableInfo), BASE_URI + "/delete")
-		context.mount(new SetServlet(tableInfo), BASE_URI + "/set")
-		context.mount(new GetServlet(tableInfo), BASE_URI + "/get")
-		context.mount(new FilterServlet(tableInfo), BASE_URI + "/filter")
+		mountAllServlet(context, tableInfo)
 	}
+
+	def mountAllServlet(implicit context: ServletContext, tableInfo: TableInfoMap): Unit = {
+		mount(new CreateServlet(tableInfo), BASE_URI + "/insert")
+		mount(new DeleteServlet(tableInfo), BASE_URI + "/delete")
+		mount(new SetServlet(tableInfo), BASE_URI + "/set")
+		mount(new GetServlet(tableInfo), BASE_URI + "/get")
+		mount(new FilterServlet(tableInfo), BASE_URI + "/filter")
+	}
+
 
 	override def destroy(context: ServletContext): Unit = {
 		zkMonitor.stop()
 		zkm.destroy()
+	}
+
+	private def mount(handler: Handler, urlPattern: String)(implicit context: ServletContext): Unit = {
+		logger.debug(s"Mounting [${handler.getClass.getName}] to path [$urlPattern]")
+		context.mount(handler, urlPattern, 1)
 	}
 }

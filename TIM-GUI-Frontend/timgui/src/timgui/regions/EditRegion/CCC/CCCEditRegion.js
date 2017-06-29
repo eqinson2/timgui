@@ -70,7 +70,7 @@ define([
                 "name": this.options.name,
                 "score": this.options.score,
                 "rank": this.options.rank
-            }
+            };
         },
 
         getNewData: function () {

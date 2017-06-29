@@ -72,7 +72,7 @@ define([
                 "age": this.options.age,
                 "job": this.options.job,
                 "hometown": this.options.hometown
-            }
+            };
         },
 
         getNewData: function () {
