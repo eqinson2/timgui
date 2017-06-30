@@ -33,7 +33,7 @@ class FilterServlet(private[this] val tableInfo: TableInfoMap, selector: Option[
 
 						val json: JsValue = Json.obj(
 							"tableName" -> table,
-							"tableHander" -> listOfCol,
+							"tableHeader" -> listOfCol,
 							"tableContents" -> contents)
 
 						Ok(json, defaultHeader)

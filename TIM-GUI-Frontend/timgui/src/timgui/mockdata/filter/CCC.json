@@ -1,6 +1,6 @@
 {
     "tableName": "CCC",
-    "tableHander": [
+    "tableHeader": [
         "name",
         "score",
         "rank"

@@ -1,6 +1,6 @@
 {
     "tableName": "BBB",
-    "tableHander": [
+    "tableHeader": [
         "name",
         "age",
         "job",

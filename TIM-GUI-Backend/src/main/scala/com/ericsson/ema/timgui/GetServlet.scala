@@ -31,7 +31,7 @@ class GetServlet(tableInfo: TableInfoMap, selector: Option[Selector] = None) ext
 
 						val json: JsValue = Json.obj(
 							"tableName" -> table,
-							"tableHander" -> listOfCol,
+							"tableHeader" -> listOfCol,
 							"tableContents" -> contents)
 
 						Ok(json, defaultHeader)

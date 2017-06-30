@@ -13,7 +13,7 @@ define([
         },
 
         buildTableHeader: function (data) {
-            return data.tableHander;
+            return data.tableHeader;
         },
 
         buildTableName: function (data) {
