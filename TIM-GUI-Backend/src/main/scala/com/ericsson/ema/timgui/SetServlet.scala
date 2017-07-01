@@ -20,8 +20,8 @@ class SetServlet(private[this] val tableInfo: TableInfoMap, updater: Option[Upda
 	put("/:tableName") {
 		params.get("tableName") match {
 			case Some(table) if validTables.isValid(tableInfo, table) =>
+				logger.info("Try to set " + table + " with condition " + Json.prettyPrint(Json.parse(request.body)))
 				val fields = tableInfo.lookup(table).map(_.tableMetadata.keys.toList)
-
 				fields match {
 					case Some(f) =>
 						val json = Json.parse(request.body)
@@ -38,16 +38,21 @@ class SetServlet(private[this] val tableInfo: TableInfoMap, updater: Option[Upda
 
 						Try(upd.execute()) match {
 							case Success(_)  => NoContent
-							case Failure(ex) => BadRequest(body = jsonResponse("500", "update into table failed"), reason = ex.getMessage)
+							case Failure(ex) =>
+								logger.error("update into table failed: " + ex.getMessage)
+								BadRequest(body = jsonResponse("500", "update into table failed: " + ex.getMessage), reason = ex.getMessage)
 						}
 					case None    =>
+						logger.error(s"unexpected table: $table in zkcache when set table")
 						InternalServerError(body = jsonResponse("500", s"unexpected table: $table in zkcache when set table"), headers = defaultHeader)
 				}
 
 			case Some(table) if !validTables.isValid(tableInfo, table) =>
+				logger.error(s"illegal table name: $table in set request")
 				BadRequest(body = jsonResponse("400", s"illegal table name: $table in set request"), reason = "Bad Request")
 
 			case None =>
+				logger.error("illegal set request")
 				BadRequest(body = jsonResponse("400", "illegal set request"), reason = "Bad Request")
 		}
 	}

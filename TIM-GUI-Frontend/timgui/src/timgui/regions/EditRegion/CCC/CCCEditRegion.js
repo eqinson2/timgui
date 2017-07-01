@@ -8,11 +8,11 @@ define([
     'formvalidator/Validator',
     'container/api',
     'widgets/Notification',
-    'i18n!timgui/dictionary.json',
     '../../../widgets/authHandler/AuthHandler',
-    'commonComponents/model/GenericModel'
+    'commonComponents/model/GenericModel',
+    "i18n!timgui/dictionary.json"
 ], function (core, View, net, Dialog, Button, SelectBox, Validator, container,
-             Notification, dictionary, AuthHandler, GenericModel) {
+             Notification, AuthHandler, GenericModel, dictionary) {
 
     return core.Region.extend({
 
@@ -82,7 +82,7 @@ define([
 
         saveTab: function (oldData, newData) {
             GenericModel.save({
-                url: "/timgui-backend/tables/set/" + this.tabName,
+                url: dictionary.baseURI + "/tables/set/" + this.tabName,
                 type: "PUT",
                 authentication: this.authHandler.authenticationDetails(),
                 contentType: "application/json;charset=UTF-8",

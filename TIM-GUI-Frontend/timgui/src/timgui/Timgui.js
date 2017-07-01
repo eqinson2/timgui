@@ -12,13 +12,14 @@ define([
     'jscore/ext/net',
     'widgets/Notification',
     "./widgets/authHandler/AuthHandler",
-    "commonComponents/model/GenericModel"
+    "commonComponents/model/GenericModel",
+    "i18n!timgui/dictionary.json"
 ], function (core, View,
              TopSection,
              TableRegion, SelectRegion,
              Button, Dialog, SlidingPanels,
              container, AddTableContentWidget, net,
-             Notification, AuthHandler, GenericModel) {
+             Notification, AuthHandler, GenericModel, dictionary) {
     'use strict';
 
     return core.App.extend({
@@ -94,7 +95,7 @@ define([
 
         saveTabContent: function (tabName, tabData, addTabContWidget) {
             GenericModel.save({
-                url: '/timgui-backend/tables/insert/' + tabName,
+                url: dictionary.baseURI + "/tables/insert/" + tabName,
                 type: "POST",
                 authentication: this.authHandler.authenticationDetails(),
                 headers: tabData,
@@ -142,7 +143,7 @@ define([
 
         initTabList: function (addTabContWidget) {
             GenericModel.fetch({
-                url: "/timgui-backend/tables/get/listAll",
+                url: dictionary.baseURI + "/tables/get/listAll",
                 authentication: this.authHandler.authenticationDetails(),
                 success: function (resp) {
                     addTabContWidget.initTab(resp.tables);

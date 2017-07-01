@@ -10,7 +10,7 @@
         <filter-class>com.ericsson.oauth.app.OAuthAuthorizationServletFilter</filter-class>
         <init-param>
             <param-name>oauth-client-id</param-name>
-            <param-value>EDA_CAI3G_DC_0f8ec27c-2c2d-427b-8e12-85970fcdc6fa</param-value>
+            <param-value>EDA_TIMGUI_0f8ec27c-2c2d-427b-8e12-85970fcdc6fa</param-value>
         </init-param>
         <init-param>
             <param-name>oauth-client-secret</param-name>
@@ -18,7 +18,9 @@
         </init-param>
         <init-param>
             <param-name>oauth-scope</param-name>
-            <param-value>https://www.ericsson.com/eda/system_info.read https://www.ericsson.com/eda/sync_single_entry.read https://www.ericsson.com/eda/sync_single_entry.write</param-value>
+            <param-value>https://www.ericsson.com/eda/system_info.read
+                https://www.ericsson.com/eda/TIMGUI.read https://www.ericsson.com/eda/TIMGUI.write
+            </param-value>
         </init-param>
     </filter>
     <filter-mapping>

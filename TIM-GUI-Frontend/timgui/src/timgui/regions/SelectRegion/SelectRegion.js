@@ -36,7 +36,7 @@ define([
                 this.tableInput.detach();
             }
             GenericModel.fetch({
-                url: "/timgui-backend/tables/get/listAll",
+                url: dictionary.baseURI + "/tables/get/listAll",
                 authentication: this.authHandler.authenticationDetails(),
                 success: function (resp) {
                     this.tableList = resp.tables;

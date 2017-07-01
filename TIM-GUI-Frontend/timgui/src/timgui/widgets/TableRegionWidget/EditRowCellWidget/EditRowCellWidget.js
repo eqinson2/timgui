@@ -10,9 +10,10 @@ define([
     '../../../regions/EditRegion/CCC/CCCEditRegion',
     '../../../widgets/authHandler/AuthHandler',
     'commonComponents/model/GenericModel',
-    '../../../models/TableModel'
+    '../../../models/TableModel',
+    "i18n!timgui/dictionary.json"
 ], function (Cell, View, Dialog, container, net, Notification, AAAEditRegion, BBBEditRegion, CCCEditRegion,
-             AuthHandler, GenericModel, TableModel) {
+             AuthHandler, GenericModel, TableModel, dictionary) {
 
     return Cell.extend({
 
@@ -74,7 +75,7 @@ define([
                     color: 'darkBlue',
                     action: function () {
                         GenericModel.destroy({
-                            url: "/timgui-backend/tables/delete/" + this.tabName,
+                            url: dictionary.baseURI + "/tables/delete/" + this.tabName,
                             authentication: this.authHandler.authenticationDetails(),
                             type: "DELETE",
                             headers: this.getRow().getData(),

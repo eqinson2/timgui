@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory
 class ScalatraBootstrap extends LifeCycle {
 	private val logger = LoggerFactory.getLogger("ScalatraBootstrap")
 
-	private val BASE_URI = "/timgui-backend/tables"
+	private val BASE_URI = "/tables"
 
 	private var zkm: ZKConnectionManager = _
 
