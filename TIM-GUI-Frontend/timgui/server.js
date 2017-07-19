@@ -3,16 +3,24 @@ module.exports = function (app) {
         res.status(200).send(require("./src/timgui/mockdata/tables.json"));
     });
 
-    app.get("/timgui-backend/tables/get/AAA", function (req, res) {
-        res.status(200).send(require("./src/timgui/mockdata/tableContents/AAA.json"));
+    app.get("/timgui-backend/tables/get/Dispatch", function (req, res) {
+        res.status(200).send(require("./src/timgui/mockdata/tableContents/Dispatch.json"));
     });
 
-    app.get("/timgui-backend/tables/get/BBB", function (req, res) {
-        res.status(200).send(require("./src/timgui/mockdata/tableContents/BBB.json"));
+    app.get("/timgui-backend/tables/get/AVPType", function (req, res) {
+        res.status(200).send(require("./src/timgui/mockdata/tableContents/AVPType.json"));
     });
 
-    app.get("/timgui-backend/tables/get/CCC", function (req, res) {
-        res.status(200).send(require("./src/timgui/mockdata/tableContents/CCC.json"));
+    app.get("/timgui-backend/tables/get/WF", function (req, res) {
+        res.status(200).send(require("./src/timgui/mockdata/tableContents/WF.json"));
+    });
+
+    app.get("/timgui-backend/tables/get/Action", function (req, res) {
+        res.status(200).send(require("./src/timgui/mockdata/tableContents/Action.json"));
+    });
+
+    app.get("/timgui-backend/tables/get/ErrorMsg", function (req, res) {
+        res.status(200).send(require("./src/timgui/mockdata/tableContents/ErrorMsg.json"));
     });
 
     app.get("/timgui-backend/tables/filter/AAA", function (req, res) {
@@ -27,8 +35,7 @@ module.exports = function (app) {
         res.status(200).send(require("./src/timgui/mockdata/filter/CCC.json"));
     });
 
-
-    app.post("/timgui-backend/tables/insert/AAA", function (req, res) {
+    app.post("/timgui-backend/tables/insert/Dispatch", function (req, res) {
         res.status(204).send();
     });
 
@@ -52,7 +59,7 @@ module.exports = function (app) {
         res.status(204).send();
     });
 
-    app.put("/timgui-backend/tables/set/AAA", function (req, res) {
+    app.put("/timgui-backend/tables/set/Dispatch", function (req, res) {
         res.status(204).send();
     });
 

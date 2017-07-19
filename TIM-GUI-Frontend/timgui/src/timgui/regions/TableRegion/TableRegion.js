@@ -48,8 +48,8 @@ define([
         replaceTableData: function (data) {
             this.table.setData(data);
         },
-
-        //Fetch all Routing Configurations
+        
+        // fetch selected table content
         fetchTable: function (selectedTabName) {
             this.view.setLoadingDisplay(true);
             GenericModel.fetch({
@@ -57,7 +57,6 @@ define([
                 authentication: this.authHandler.authenticationDetails(),
                 success: function (data) {
                     this.displayTable(data);
-
                 }.bind(this),
                 error: function (response) {
                     console.log("Get table contents from Backend failed: " + response.getStatusText());
@@ -217,84 +216,6 @@ define([
         setPageSize: function (pageSize) {
             this.pageSize = pageSize;
         },
-
-        // selecting: function (params) {
-        //     this.view.setLoadingDisplay(true);
-        //     this.sleep(500);
-        //     GenericModel.fetch({
-        //         url: "/syncsingleentry-backend/dc/cai3g/routing/list",
-        //         authentication: this.authHandler.authenticationDetails(),
-        //         success: function (data) {
-        //             this.view.setLoadingDisplay(false);
-        //             var filetredData = [];
-        //             var filterMoType = params.moType.toLowerCase();
-        //             var filterNes = params.nes;
-        //             var filterRoutingMethods = params.routeType;
-        //
-        //             this.routingConfigModel.buildTableContent(data);
-        //             var allData = this.routingConfigModel.getRoutingConfigList();
-        //
-        //             var moTypeMatchedData = [];
-        //             if (filterMoType.length === 0) {
-        //                 moTypeMatchedData = allData;
-        //             } else {
-        //                 for (var val in allData) {
-        //                     var iMatch = allData[val].moType.toLowerCase().indexOf(filterMoType);
-        //                     if (iMatch >= 0) {
-        //                         moTypeMatchedData.push(allData[val]);
-        //                     }
-        //                 }
-        //             }
-        //
-        //             var nesMatchedData = [];
-        //             if (filterNes.length === 0) {
-        //                 nesMatchedData = [];
-        //             } else {
-        //                 for (var a in moTypeMatchedData) {
-        //                     var nes = moTypeMatchedData[a].nes;
-        //                     eachRowLoop:
-        //                         for (var b in nes) {
-        //                             for (var c in filterNes) {
-        //                                 if (nes[b] === filterNes[c]) {
-        //                                     nesMatchedData.push(moTypeMatchedData[a]);
-        //                                     break eachRowLoop;
-        //                                 }
-        //                             }
-        //                         }
-        //                 }
-        //             }
-        //
-        //             var routeTypeMatchedData = [];
-        //             if (filterRoutingMethods === 0) {
-        //                 routeTypeMatchedData = [];
-        //             } else {
-        //                 for (var i in nesMatchedData) {
-        //                     var routeType = nesMatchedData[i].routeType;
-        //                     for (var j in filterRoutingMethods) {
-        //                         if (routeType === filterRoutingMethods[j]) {
-        //                             routeTypeMatchedData.push(nesMatchedData[i]);
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //
-        //             filetredData = routeTypeMatchedData;
-        //             this.createTable(filetredData);
-        //             var fetchedResults = filetredData;
-        //             if (fetchedResults.length > 0) {
-        //                 var selectedPage = null;
-        //                 if (this.pagination !== null) {
-        //                     selectedPage = this.pagination.selectedPage;
-        //                 }
-        //                 this.paging(fetchedResults, selectedPage);
-        //             }
-        //         }.bind(this),
-        //         error: function (response) {
-        //             console.log("Get Routing List from Backend failed: " + response.getStatusText());
-        //             this.popErrorNotification("Get Routing List from Backend failed.");
-        //         }.bind(this)
-        //     });
-        // },
 
         popErrorNotification: function (msg) {
             if (undefined !== this.failNotificationWidget) {

@@ -11,14 +11,14 @@ define([
     './widgets/addTableContentWidget/AddTableContentWidget',
     'jscore/ext/net',
     'widgets/Notification',
-    "./widgets/authHandler/AuthHandler",
-    "commonComponents/model/GenericModel"
-], function (core, View,
-             TopSection,
+    './widgets/authHandler/AuthHandler',
+    'commonComponents/model/GenericModel',
+    'widgets/Dropdown',
+], function (core, View, TopSection,
              TableRegion, SelectRegion,
              Button, Dialog, SlidingPanels,
              container, AddTableContentWidget, net,
-             Notification, AuthHandler, GenericModel) {
+             Notification, AuthHandler, GenericModel, Dropdown) {
     'use strict';
 
     return core.App.extend({
@@ -55,19 +55,17 @@ define([
             });
 
             var topSection = new TopSection({
-                title: "TIM Service Catalog",
+                title: this.options.properties.title,
                 breadcrumb: this.options.breadcrumb,
                 context: this.getContext(),
-                defaultActions: [
-                    {
-                        name: 'Add Record',
-                        type: 'button',
-                        color: 'darkBlue',
-                        action: function (action) {
-                            this.showAddTabRecDialog();
-                        }.bind(this)
-                    }
-                ]
+                defaultActions: [{
+                    name: 'Add',
+                    type: 'button',
+                    color: 'darkBlue',
+                    action: function (action) {
+                        this.showAddTabRecDialog();
+                    }.bind(this)
+                }]
             });
 
             topSection.setContent(new SlidingPanels({

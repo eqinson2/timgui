@@ -3,7 +3,7 @@
     "defaultPhase": "package",
     "properties": {
         "package": "timgui",
-        "name": "Timgui",
+        "name": "timgui",
         "version": "1.0.0",
         "skeleton": "2.3.1",
         "skeletonType": "app"
@@ -12,6 +12,7 @@
         "package": {
             "depends": [
                 "clean",
+                "test",
                 "compile",
                 "compress"
             ]

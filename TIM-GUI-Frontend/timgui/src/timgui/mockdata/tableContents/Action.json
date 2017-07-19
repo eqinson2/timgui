@@ -1,0 +1,17 @@
+{
+    "tableName": "Action",
+    "tableHeader": [
+        "id",
+        "type",
+        "data",
+		"respCode"
+    ],
+    "tableContents": [
+        {
+            "id": "1",
+            "type": "imsiFormat",
+            "data": "^22201[0-9]{13}$/",
+			"respCode": "17"
+        }
+    ]
+}
