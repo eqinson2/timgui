@@ -1,7 +1,9 @@
 {
     "tables": [
-        "AAA",
-        "BBB",
-        "CCC"
+        "Dispatch",
+        "AVPType",
+        "WF",
+        "Action",
+        "ErrorMsg"
     ]
 }

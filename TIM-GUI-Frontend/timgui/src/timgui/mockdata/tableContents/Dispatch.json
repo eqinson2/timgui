@@ -1,0 +1,21 @@
+{
+    "tableName": "Dispatch",
+    "tableHeader": [
+        "login",
+        "activity",
+        "npar",
+		"operation",
+		"params",
+		"avps"		
+    ],
+    "tableContents": [
+        {
+            "login": "OPSC",
+            "activity": "preact",
+            "npar": "3",
+			"operation": "CREATE",
+			"params": "imsi,$1:msisdn,$2:profile,$3:customer,A",
+			"avps": "200,201,202"
+        }
+    ]
+}

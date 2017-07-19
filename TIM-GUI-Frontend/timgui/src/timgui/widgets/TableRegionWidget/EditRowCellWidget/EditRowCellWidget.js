@@ -5,15 +5,12 @@ define([
     'container/api',
     'jscore/ext/net',
     'widgets/Notification',
-    '../../../regions/EditRegion/AAA/AAAEditRegion',
-    '../../../regions/EditRegion/BBB/BBBEditRegion',
-    '../../../regions/EditRegion/CCC/CCCEditRegion',
+    '../../../regions/EditRegion/EditRegion',
     '../../../widgets/authHandler/AuthHandler',
     'commonComponents/model/GenericModel',
-    '../../../models/TableModel',
-    "i18n!timgui/dictionary.json"
-], function (Cell, View, Dialog, container, net, Notification, AAAEditRegion, BBBEditRegion, CCCEditRegion,
-             AuthHandler, GenericModel, TableModel, dictionary) {
+    '../../../models/TableModel'
+], function (Cell, View, Dialog, container, net, Notification, EditRegion, 
+    AuthHandler, GenericModel, TableModel) {
 
     return Cell.extend({
 
@@ -44,26 +41,11 @@ define([
 
         editRowData: function () {
             var row = this.getRow().getData();
-            switch (this.tabName) {
-                case "AAA":
-                    container.getEventBus().publish("flyout:show", {
-                        header: "Edit Table " + this.tabName,
-                        content: new AAAEditRegion(row)
-                    });
-                    break;
-                case "BBB":
-                    container.getEventBus().publish("flyout:show", {
-                        header: "Edit Table " + this.tabName,
-                        content: new BBBEditRegion(row)
-                    });
-                    break;
-                case "CCC":
-                    container.getEventBus().publish("flyout:show", {
-                        header: "Edit Table " + this.tabName,
-                        content: new CCCEditRegion(row)
-                    });
-                    break;
-            }
+            var cells = this.getRow().getCells();
+            container.getEventBus().publish("flyout:show", {
+                header: "Edit Table " + this.tabName,
+                content: new EditRegion(cells, row)
+            });
         },
 
         deleteRowData: function () {
@@ -75,7 +57,7 @@ define([
                     color: 'darkBlue',
                     action: function () {
                         GenericModel.destroy({
-                            url: dictionary.baseURI + "/tables/delete/" + this.tabName,
+                            url: "/timgui-backend/tables/delete/" + this.tabName,
                             authentication: this.authHandler.authenticationDetails(),
                             type: "DELETE",
                             headers: this.getRow().getData(),

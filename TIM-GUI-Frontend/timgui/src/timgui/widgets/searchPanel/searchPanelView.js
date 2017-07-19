@@ -18,20 +18,20 @@ define([
             return this.getElement().find('.ebSelectTable');
         },
 
-        showAAA: function () {
-            return this.getElement().find('.ebDialogBox-AAA');
+        showDispatch: function () {
+            return this.getElement().find('.ebDialogBox-Dispatch');
         },
 
-        getAAAName: function () {
-            return this.getElement().find('.ebTypeAAA-Name-Input');
+        getDispatchLogin: function () {
+            return this.getElement().find('.ebTypeDispatch-Login-Input');
         },
 
-        getAAAAge: function () {
-            return this.getElement().find('.ebTypeAAA-Age-Input');
+        getDispatchActivity: function () {
+            return this.getElement().find('.ebTypeDispatch-Activity-Input');
         },
 
-        getAAAJob: function () {
-            return this.getElement().find('.ebTypeAAA-Job-Input');
+        getDispatchNpar: function () {
+            return this.getElement().find('.ebTypeDispatch-Npar-Input');
         },
 
         showBBB: function () {

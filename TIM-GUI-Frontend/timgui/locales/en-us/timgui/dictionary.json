@@ -20,6 +20,9 @@
             "caption": "Cancel"
         }
     },
-    "baseURI": "/tim-gui-backend"
+    "TableAAAHead": {
+        "name": "name",
+        "age": "age",
+        "job": "job"
+    }
 }
-

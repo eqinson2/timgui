@@ -1,0 +1,23 @@
+{
+    "tableName": "WF",
+    "tableHeader": [
+        "mo",
+        "login",
+        "moMaint",
+		"locking",
+		"data",
+		"preActionIdList",
+		"postActionIdList"
+    ],
+    "tableContents": [
+        {
+            "mo": "TISubscriptionpreact",
+            "login": "OPSC",
+            "moMaint": "FALSE",
+			"locking": "TRUE",
+			"data": "<customer data-1>",
+			"preActionIdList": "1,2,3,17,18",
+			"postActionIdList": "240,241"
+        }
+    ]
+}

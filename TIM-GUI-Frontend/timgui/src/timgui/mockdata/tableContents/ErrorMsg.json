@@ -1,0 +1,13 @@
+{
+    "tableName": "ErrorMsg",
+    "tableHeader": [
+        "id",
+        "message"
+    ],
+    "tableContents": [
+        {
+            "id": "20",
+            "message": "IMSI OUT OF RANGE"
+        }
+    ]
+}

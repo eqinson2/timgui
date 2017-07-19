@@ -60,18 +60,18 @@ define([
 
         showDetail: function (tabName) {
             switch (tabName) {
-                case "AAA":
-                    this.view.showAAA().setStyle("display", "");
+                case "Dispatch":
+                    this.view.showDispatch().setStyle("display", "");
                     this.view.showBBB().setStyle("display", "none");
                     this.view.showCCC().setStyle("display", "none");
                     break;
                 case "BBB":
-                    this.view.showAAA().setStyle("display", "none");
+                    this.view.showDispatch().setStyle("display", "none");
                     this.view.showBBB().setStyle("display", "");
                     this.view.showCCC().setStyle("display", "none");
                     break;
                 case "CCC":
-                    this.view.showAAA().setStyle("display", "none");
+                    this.view.showDispatch().setStyle("display", "none");
                     this.view.showBBB().setStyle("display", "none");
                     this.view.showCCC().setStyle("display", "");
                     break;
@@ -80,11 +80,11 @@ define([
 
         getInput: function (tabName) {
             switch (tabName) {
-                case "AAA":
+                case "Dispatch":
                     return {
-                        "name": this.view.getAAAName().getValue(),
-                        "age": this.view.getAAAAge().getValue(),
-                        "job": this.view.getAAAJob().getValue()
+                        "login": this.view.getDispatchLogin().getValue(),
+                        "activity": this.view.getDispatchActivity().getValue(),
+                        "npar": this.view.getDispatchNpar().getValue()
                     };
                 case "BBB":
                     return {
@@ -108,7 +108,6 @@ define([
                 "condition": condition
             };
             this.parent.getContext().eventBus.publish("tableRegion:filter", param);
-
         },
 
         search: function () {

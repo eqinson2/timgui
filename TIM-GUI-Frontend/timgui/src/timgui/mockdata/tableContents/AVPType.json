@@ -1,0 +1,19 @@
+{
+    "tableName": "AVPType",
+    "tableHeader": [
+        "id",
+        "name",
+        "type",
+		"pattern",
+		"errorId"
+    ],
+    "tableContents": [
+        {
+            "id": "200",
+			"name": "imsi",
+            "type": "string",
+            "pattern": "{0-9}12",
+			"errorId": "20"
+        }
+    ]
+}

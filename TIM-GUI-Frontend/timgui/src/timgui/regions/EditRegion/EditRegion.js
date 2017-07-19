@@ -1,6 +1,6 @@
 define([
     'jscore/core',
-    './AAAEditRegionView',
+    './EditRegionView',
     'jscore/ext/net',
     'widgets/Dialog',
     'widgets/Button',
@@ -8,26 +8,39 @@ define([
     'formvalidator/Validator',
     'container/api',
     'widgets/Notification',
-    '../../../widgets/authHandler/AuthHandler',
-    'commonComponents/model/GenericModel',
-    "i18n!timgui/dictionary.json"
+    'i18n!timgui/dictionary.json',
+    '../../widgets/authHandler/AuthHandler',
+    'commonComponents/model/GenericModel'
 ], function (core, View, net, Dialog, Button, SelectBox, Validator, container,
-             Notification, AuthHandler, GenericModel, dictionary) {
+             Notification, dictionary, AuthHandler, GenericModel) {
 
     return core.Region.extend({
 
         View: View,
 
-        init: function (options) {
+        init: function (cell, row) {
             this.authHandler = new AuthHandler();
-            this.options = options || {};
-            this.tabName = "AAA";
+            this.options = row || {};
+            this.tabName = "Dispatch"; // need change
+            this.cell = cell || {};
+            // console.log("cell: ", this.cell);
+            // for (var i = 0, len = cell.length; i < len; i++)
+            // {
+            //     console.log(this.cell[i].options.column.title);
+            // }
         },
 
         onDOMAttach: function () {
-            this.initNameInput(this.options.name);
-            this.initAgeInput(this.options.age);
-            this.initJobInput(this.options.job);
+            for (var len = this.cell.length, i = len - 1; i >= 0; i--) {
+                var title = this.cell[i].options.column.title;
+                this.initLoginInput(title, this.options[title]);
+            }
+            //this.initActivityInput(this.options.activity);
+            // this.initNparInput(this.options.npar);
+            // this.initOperationInput(this.options.operation);
+            // this.initMoInput(this.options.mo);
+            // this.initParamsInput(this.options.params);
+            // this.initAvpsInput(this.options.avps);
             this.initControlBox();
         },
 
@@ -70,15 +83,26 @@ define([
         },
 
         getNewData: function () {
-            var name = this.view.getNameInput().getValue();
-            var age = this.view.getAgeInput().getValue();
-            var job = this.view.getJobInput().getValue();
-            return {"name": name, "age": age, "job": job};
+            var login = this.view.getLoginInput().getValue();
+            var activity = this.view.getActivityInput().getValue();
+            var npar = this.view.getNparInput().getValue();
+            var operation = this.view.getOperationInput().getValue();
+            var mo = this.view.getMoInput().getValue();
+            var params = this.view.getParamsInput().getValue();
+            var avps = this.view.getAvpsInput().getValue();
+            return {"login": login,
+                    "activity": activity,
+                    "npar": npar,
+                    "operation": operation,
+                    "mo": mo,
+                    "params": params,
+                    "avps": avps
+            };
         },
 
         saveTab: function (oldData, newData) {
             GenericModel.save({
-                url: dictionary.baseURI + "/tables/set/" + this.tabName,
+                url: "/timgui-backend/tables/set/" + this.tabName,
                 type: "PUT",
                 authentication: this.authHandler.authenticationDetails(),
                 contentType: "application/json;charset=UTF-8",
@@ -126,29 +150,62 @@ define([
 
         },
 
-        initNameInput: function (value) {
-            this.name = value;
-            this.view.getNameInput().setValue(value);
-            this.view.getNameInput().setAttribute("title", value);
+        initLoginInput: function (title, value) {
+            var div = new core.Element();
+            
+            var label = new core.Element();
+            label.setAttribute("class", "eaTimgui-editTable-editContent-loginBox-loginLabel");
+            label.setText(title);
+
+            var input = new core.Element('input');
+            input.setAttribute("type", "text");
+            input.setAttribute("class", "ebInput eaTimgui-editTable-editContent-loginBox-loginInput");
+            input.setAttribute("title", value);
+            input.setValue(value);
+
+            div.append(label);
+            div.append(input);
+            this.view.getEditContent().prepend(div);
         },
 
-        initAgeInput: function (value) {
-            this.age = value;
-            this.view.getAgeInput().setValue(value);
-            this.view.getAgeInput().setAttribute("title", value);
+        initActivityInput: function (value) {
+            this.activity = value;
+            this.view.getActivityInput().setValue(value);
+            this.view.getActivityInput().setAttribute("title", value);
         },
 
-        initJobInput: function (value) {
-            this.job = value;
-            this.view.getJobInput().setValue(value);
-            this.view.getJobInput().setAttribute("title", value);
-        }
+        initNparInput: function (value) {
+            this.npar = value;
+            this.view.getNparInput().setValue(value);
+            this.view.getNparInput().setAttribute("title", value);
+        },
+
+        initOperationInput: function (value) {
+            this.operation = value;
+            this.view.getOperationInput().setValue(value);
+            this.view.getOperationInput().setAttribute("title", value);
+        },
+
+        initMoInput: function (value) {
+            this.mo = value;
+            this.view.getMoInput().setValue(value);
+            this.view.getMoInput().setAttribute("title", value);
+        },
+
+        initParamsInput: function (value) {
+            this.params = value;
+            this.view.getParamsInput().setValue(value);
+            this.view.getParamsInput().setAttribute("title", value);
+        },
+
+        initAvpsInput: function (value) {
+            this.avps = value;
+            this.view.getAvpsInput().setValue(value);
+            this.view.getAvpsInput().setAttribute("title", value);
+        }        
     });
 
     function isNumOnly(inputString) {
         return new RegExp("^[0-9]+$").test(inputString);
     }
-
-
-})
-;
+});
